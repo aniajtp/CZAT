@@ -1,0 +1,40 @@
+{
+  "name": "czat",
+  "version": "1.0.0",
+  "description": "Plik package.json do zrobienia czatu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --env production",
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Czat"
+  },
+  "keywords": [
+    "tworzenie",
+    "czatu"
+  ],
+  "author": "ania",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^2.0.0",
+    "express": "^4.16.4",
+    "html-webpack-plugin": "^3.2.0",
+    "optimize-js-plugin": "0.0.4",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-hot-loader": "^4.3.12",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
