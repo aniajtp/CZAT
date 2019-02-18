@@ -5,8 +5,8 @@ const socketIo = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
-const UsersService = require('./UsersService');
 
+const UsersService = require('./UsersService');
 const usersService = new UsersService();
 
 app.use(express.static(`${__dirname}/public`));
@@ -15,37 +15,26 @@ app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
 
-
-//obsługa nowego użytkownika
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`);
-});
 io.on('connection', (socket) => {
-    socket.on('join', (name) => {
-        usersService.addUser({
-          id: socket.id,
-          name
-        });
-        io.emit('update', {
-          users: usersService.getAllUsers()
-        });
+  socket.on('join', (name) => {
+    usersService.addUser({
+      id: socket.id,
+      name
     });
-});
-
-//obsługa przerwania połączenia z serwerem
-io.on('connection', (socket) => {
-    socket.on('disconnect', () => {
-      usersService.removeUser(socket.id);
-      socket.broadcast.emit('update', {
-        users: usersService.getAllUsers()
-      });
+    io.emit('update', {
+      users: usersService.getAllUsers()
     });
-});
+  });
 
-//obsługa wysyłania wiadomości
-io.on('connection', (socket) => {
-    socket.on('message', (message) => {
-      const {name} = usersService.getUserById(socket.id);
+  socket.on('disconnect', () => {
+    usersService.removeUser(socket.id);
+    socket.broadcast.emit('update', {
+      users: usersService.getAllUsers()
+    });
+  });
+
+  socket.on('message', (message) => {
+    const {name} = usersService.getUserById(socket.id);
       socket.broadcast.emit('message', {
         text: message.text,
         from: name
@@ -53,7 +42,8 @@ io.on('connection', (socket) => {
     });
 });
 
+
 server.listen(3000, () => {
+  console.log(__dirname);
   console.log('listening on *:3000');
 });
-
